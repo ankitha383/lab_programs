@@ -1,0 +1,42 @@
+import random
+
+class VacuumCleaner:
+    def __init__(self, grid_size):
+        self.grid_size = grid_size
+        self.position = (random.randint(0, grid_size-1), random.randint(0, grid_size-1))  # Random starting position
+        
+    def move(self):
+        
+        x, y = self.position
+        move_direction = random.choice(['up', 'down', 'left', 'right'])
+        
+        if move_direction == 'up' and x > 0:
+            self.position = (x-1, y)
+        elif move_direction == 'down' and x < self.grid_size-1:
+            self.position = (x+1, y)
+        elif move_direction == 'left' and y > 0:
+            self.position = (x, y-1)
+        elif move_direction == 'right' and y < self.grid_size-1:
+            self.position = (x, y+1)
+        
+    def check_for_dirt(self, grid):
+        x, y = self.position
+        if grid[x][y] == 1:  
+            grid[x][y] = 0  
+            print(f"Dirt found at {self.position}, cleaning it up!")
+        else:
+            print(f"No dirt at {self.position}")
+
+
+grid_size = 5
+grid = [[random.choice([0, 1]) for _ in range(grid_size)] for _ in range(grid_size)]
+
+
+vacuum = VacuumCleaner(grid_size)
+
+
+for _ in range(10):  # Move 10 times
+    vacuum.move()
+    vacuum.check_for_dirt(grid)
+
+# Print final grid state
